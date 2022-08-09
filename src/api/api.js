@@ -9,7 +9,7 @@ import path from "path";
 const app = express();
 const Configure = () => {
     app.use(express.static("public"));
-
+    app.use(express.json({ extended: false }));
     // define the first route
     app.get("/", function (req, res) {
         res.send("<h1>Hello World!</h1>");
