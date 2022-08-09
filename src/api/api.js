@@ -2,14 +2,23 @@
     configure services and middleware
 */
 import express from "express";
+import cors from "cors"
 
-import * as task from "./controllers/tasks.js";
+///routers
+import { mapRoutes } from "./routes.js";
+
 import path from "path";
 
 const app = express();
+
 const Configure = () => {
+
     app.use(express.static("public"));
     app.use(express.json({ extended: false }));
+    app.use(cors());
+    app.use(express.urlencoded());
+
+
     // define the first route
     app.get("/", function (req, res) {
         res.send("<h1>Hello World!</h1>");
@@ -17,20 +26,13 @@ const Configure = () => {
     app.get("/test", function (req, res) {
         res.json("working fine....");
     });
-    app.get("/api/1/tasks", async function (req, res) {
-        try {
 
-            const gettasks = await task.GetTasks();
-            res.json(gettasks);
-        }
-        catch (error) {
-            console.log(error)
-            res.json(error)
-        }
-    });
+    ///router mappimg
+    mapRoutes(app)
+
 
     // start the server listening for requests
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3030;
     app.listen(PORT, () => console.log("Server is running...", PORT));
 };
 
