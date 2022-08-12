@@ -76,3 +76,9 @@ model user {
   Id   Int     @id @default(autoincrement())
   Name String? @db.VarChar(100)
 }
+
+model Teams {
+  Id          Int     @id @default(autoincrement())
+  Name        String  @db.VarChar(255)
+  Description String? @db.VarChar(255)
+}
