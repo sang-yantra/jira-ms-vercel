@@ -24,6 +24,7 @@ const Configure = () => {
         res.send("<h1>Hello World!</h1>");
     });
     app.get("/test", function (req, res) {
+        const x = "";
         res.json("working fine....");
     });
 
