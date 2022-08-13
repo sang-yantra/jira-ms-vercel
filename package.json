@@ -7,10 +7,13 @@
   "scripts": {
     "build": "prisma generate",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "fetch": "prisma db pull && prisma generate",
+    "swagger-autogen": "node swagger.js"
   },
   "dependencies": {
     "@prisma/client": "^4.1.1",
+    "binary-uuid": "^2.0.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -21,13 +24,16 @@
     "module-alias": "^2.2.2",
     "pm2": "^5.2.0",
     "swagger-jsdoc": "^6.2.5",
-    "swagger-ui-express": "^4.5.0"
+    "swagger-ui-express": "^4.5.0",
+    "uuid": "^8.3.2",
+    "uuid-tool": "^2.0.3"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
     "nodemon": "^2.0.0",
     "prettier": "^1.19.1",
-    "prisma": "^4.1.1"
+    "prisma": "^4.1.1",
+    "swagger-autogen": "^2.21.5"
   },
   "keywords": [],
   "author": "anupmahato033@gmail.com,pawan.edu930@gmail.com",

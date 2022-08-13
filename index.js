@@ -1,4 +1,4 @@
-import * as api from "./src/api/api.js";
+import app from "./src/api/api.js"
 
-api.Configure();
-api.ConfigureServices();
+const PORT = process.env.PORT || 3030;
+app.listen(PORT, () => console.log("Server is running...", PORT));

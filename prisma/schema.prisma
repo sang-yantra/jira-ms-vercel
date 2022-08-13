@@ -23,62 +23,111 @@ model TASK {
   REMAINING           Int?
 }
 
-model Example {
-  id String @id
-}
-
-model Issue {
-  IssueId      Int     @id @default(autoincrement())
-  IssueTypeId  Int?
-  ShortSummary String? @db.VarChar(255)
-  Description  String? @db.VarChar(255)
-  ReporterId   Int?
-  AssigneeId   Int?
-  PriorityId   Int?
-
-  @@index([AssigneeId], map: "AssigneeId")
-  @@index([IssueTypeId], map: "IssueTypeId")
-  @@index([PriorityId], map: "PriorityId")
-  @@index([ReporterId], map: "ReporterId")
-}
-
-model IssueType {
-  IssueTypeId      Int     @id @default(autoincrement())
-  IssueName        String  @db.VarChar(255)
-  IssueDescription String? @db.VarChar(255)
-}
-
-model PollQuestion {
-  id        String    @id
-  createdAt DateTime  @default(now())
-  endsAt    DateTime?
-  question  String
-}
-
-model Priority {
-  PriorityId  Int     @id @default(autoincrement())
-  Name        String  @db.VarChar(255)
-  Description String? @db.VarChar(255)
-}
-
-model UserInfo {
-  UserId   Int     @id @default(autoincrement())
-  Name     String  @db.VarChar(255)
-  UserType String? @db.VarChar(50)
-}
-
-model categories {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(255)
-}
-
-model user {
-  Id   Int     @id @default(autoincrement())
-  Name String? @db.VarChar(100)
-}
-
 model Teams {
-  Id          Int     @id @default(autoincrement())
-  Name        String  @db.VarChar(255)
-  Description String? @db.VarChar(255)
+  Id          Bytes   @id @db.Binary(16)
+  Name        String  @db.VarChar(200)
+  Description String? @db.VarChar(250)
+}
+
+model Attachments {
+  Id          Bytes  @id @db.Binary(16)
+  Pbi_Id      Bytes? @db.Binary(16)
+  Task_Id     Bytes? @db.Binary(16)
+  Name        String @db.VarChar(200)
+  Attach_File Bytes?
+
+  @@index([Pbi_Id], map: "pbiinfo_id_idx")
+  @@index([Task_Id], map: "task_id_idx")
+}
+
+model Members {
+  Id      Bytes   @id @db.Binary(16)
+  Team_Id Bytes?  @db.Binary(16)
+  Name    String  @db.VarChar(200)
+  Email   String? @db.VarChar(100)
+  Role    String  @db.VarChar(150)
+
+  @@index([Team_Id], map: "teams_id_idx")
+}
+
+model PbiInfo {
+  Id                  Bytes             @id @db.Binary(16)
+  Team_Id             Bytes?            @db.Binary(16)
+  Title               String            @db.VarChar(200)
+  Type                PbiInfo_Type?
+  Description         String?           @db.VarChar(250)
+  Status              PbiInfo_Status?
+  Acceptance_Criteria String?           @db.VarChar(250)
+  Nfr                 String?           @db.VarChar(250)
+  Business_Value      Int?
+  Effort              Int?
+  Priority            PbiInfo_Priority?
+  Assigned_To         Bytes?            @db.Binary(16)
+  Created_Date        DateTime?         @default(now()) @db.Timestamp(0)
+  Updated_Date        DateTime?         @default(now()) @db.Timestamp(0)
+
+  @@index([Assigned_To], map: "members_id_idx")
+  @@index([Team_Id], map: "teams_id_idx")
+}
+
+model TaskInfo {
+  Id                  Bytes              @id @db.Binary(16)
+  Pbi_Id              Bytes?             @db.Binary(16)
+  Title               String             @db.VarChar(200)
+  Type                TaskInfo_Type?
+  Description         String?            @db.VarChar(250)
+  Status              TaskInfo_Status?
+  Acceptance_Criteria String?            @db.VarChar(250)
+  Nfr                 String?            @db.VarChar(250)
+  Original_Estimate   Int?
+  Remaining           Int?
+  Completed           Int?
+  Priority            TaskInfo_Priority?
+  Assigned_To         Bytes?             @db.Binary(16)
+  Created_Date        DateTime?          @default(now()) @db.Timestamp(0)
+  Updated_Date        DateTime?          @default(now()) @db.Timestamp(0)
+
+  @@index([Assigned_To], map: "members_id_idx")
+  @@index([Pbi_Id], map: "pbiinfo_id_idx")
+}
+
+model Teams12 {
+  Id          String  @id @db.VarChar(255)
+  Name        String  @db.VarChar(200)
+  Description String? @db.VarChar(250)
+}
+
+enum TaskInfo_Type {
+  Normal
+  Bug
+}
+
+enum PbiInfo_Type {
+  Impedements
+  Risk
+  Normal
+}
+
+enum PbiInfo_Status {
+  Active
+  New
+  Done
+}
+
+enum TaskInfo_Status {
+  Active
+  New
+  Done
+}
+
+enum PbiInfo_Priority {
+  Low
+  Medium
+  High
+}
+
+enum TaskInfo_Priority {
+  Low
+  Medium
+  High
 }

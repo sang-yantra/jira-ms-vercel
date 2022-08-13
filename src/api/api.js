@@ -3,40 +3,42 @@
 */
 import express from "express";
 import cors from "cors"
+import swaggerUi from "swagger-ui-express"
+import swaggerAutoGen from "swagger-autogen"
+import swaggerJsDoc from "swagger-jsdoc";
 
 ///routers
-import { mapRoutes } from "./routes.js";
+import routes from "./routes.js";
 
-import path from "path";
 
 const app = express();
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: "Jira Api",
+            description: "Rest aps for Jira app built in Node js",
+            contact: {
+                name: "Anup Mahato"
+            },
+            servers: ["http://localhost:3030"]
+        }
+    },
+    apis: ["./src/api/routes.js"]
+}
 
-const Configure = () => {
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-    app.use(express.static("public"));
-    app.use(express.json({ extended: false }));
-    app.use(cors());
-    app.use(express.urlencoded());
+app.use(express.static("public"));
+app.use(express.json({ extended: false }));
+app.use(cors());
+app.use(express.urlencoded());
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
+app.use('/', routes);
 
-    // define the first route
-    app.get("/", function (req, res) {
-        res.send("<h1>Hello World!</h1>");
-    });
-    app.get("/test", function (req, res) {
-        const x = "";
-        res.json("working fine....");
-    });
-
-    ///router mappimg
-    mapRoutes(app)
+export default app;
 
 
-    // start the server listening for requests
-    const PORT = process.env.PORT || 3030;
-    app.listen(PORT, () => console.log("Server is running...", PORT));
-};
 
-const ConfigureServices = () => { };
 
-export { Configure, ConfigureServices };
+
