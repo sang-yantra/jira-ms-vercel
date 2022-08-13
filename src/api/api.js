@@ -6,10 +6,9 @@ import cors from "cors"
 import swaggerUi from "swagger-ui-express"
 import swaggerAutoGen from "swagger-autogen"
 import swaggerJsDoc from "swagger-jsdoc";
-
 ///routers
 import routes from "./routes.js";
-
+import css from "../../swagger.js"
 
 const app = express();
 const swaggerOptions = {
@@ -27,12 +26,19 @@ const swaggerOptions = {
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const customOptions1 = {
+    customCssUrl: "../.../swagger.css"
+}
+
+const customOptions = {
+    customCss: css
+}
 
 app.use(express.static("public"));
 app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(express.urlencoded());
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs, customOptions))
 
 app.use('/', routes);
 
