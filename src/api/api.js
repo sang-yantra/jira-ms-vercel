@@ -13,13 +13,24 @@ import css from "../../swagger.js"
 const app = express();
 const swaggerOptions = {
     swaggerDefinition: {
+        openapi: '3.0.0',
         info: {
             title: "Jira Api",
             description: "Rest aps for Jira app built in Node js",
-            contact: {
-                name: "Anup Mahato"
+            license: {
+                name: 'Licensed Under MIT',
+                url: 'https://spdx.org/licenses/MIT.html',
             },
-            servers: ["http://localhost:3030"]
+            contact: {
+                name: "Anup Mahato",
+                url: 'https://jsonplaceholder.typicode.com'
+            },
+            servers: [
+                {
+                    url: 'http://localhost:3030',
+                    description: 'Development server',
+                },
+            ]
         }
     },
     apis: ["./src/api/routes.js"]
@@ -27,7 +38,7 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const customOptions1 = {
-    customCssUrl: "../.../swagger.css"
+    customCssUrl: "@/swagger.css"
 }
 
 const customOptions = {
