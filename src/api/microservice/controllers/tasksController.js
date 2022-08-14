@@ -1,7 +1,7 @@
 
 import { PrismaClient } from "@prisma/client";
 import { catchErrors } from "../../domain/errors/asyncCatch.js";
-
+import TaskServices from "../../application/services/taskServices.js";
 const prisma = new PrismaClient();
 
 
@@ -9,7 +9,10 @@ const prisma = new PrismaClient();
  * Controller to get all tasks 
  */
 export const getTasks = catchErrors(async (req, res) => {
-    const tasks = await prisma.tASK.findMany();
+    const memberId = "a2a64c91-1bf8-11ed-a3b2-b622babdeb3e"
+    const teamId = "a3c0a19e-1bf7-11ed-a3b2-b622babdeb3e"
+    const tasks = await new TaskServices().getTasks(teamId);
+    ///const tasks = await prisma.tASK.findMany();
     res.json(tasks)
 })
 
@@ -18,6 +21,7 @@ export const getTasks = catchErrors(async (req, res) => {
  * Controller to get a particular task by id 
  */
 export const getTask = catchErrors(async (req, res) => {
+
     const task = await prisma.tASK.findUnique({
         where: {
             ID: parseInt(req.params["id"])

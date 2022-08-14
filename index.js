@@ -4,6 +4,6 @@ import app from "./src/api/api.js"
 
 
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server is running...", PORT));
 app.use('/static', express.static('public'));
