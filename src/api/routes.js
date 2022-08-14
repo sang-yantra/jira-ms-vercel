@@ -32,8 +32,8 @@ routes.get("/test", function (req, res) {
  * @swagger
  * /api/1/tasks:
  *  get:
-*     summary: Fetch all tasks
-*     description: Retrieve a single task by id
+ *    summary: Fetch all tasks
+ *    description: Retrieve a single task by id
  *    tags:
  *      - Tasks
  *    responses:
