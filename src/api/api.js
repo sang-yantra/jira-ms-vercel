@@ -31,7 +31,16 @@ const swaggerOptions = {
                     description: 'Development server',
                 },
             ]
-        }
+        },
+        tags: [{
+            name: "test",
+            description: "test api"
+
+        }, {
+            name: "Tasks",
+            description: "Tasks endpoints"
+
+        }]
     },
     apis: ["./src/api/routes.js"]
 }
