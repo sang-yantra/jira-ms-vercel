@@ -1,7 +1,7 @@
 
-import { catchErrors } from "../domain/errors/asyncCatch.js";
 import { PrismaClient } from "@prisma/client";
-import { parse } from "dotenv";
+import { catchErrors } from "../../domain/errors/asyncCatch.js";
+
 const prisma = new PrismaClient();
 
 

@@ -1,5 +1,4 @@
 import swaggerJsDoc from "swagger-jsdoc";
-
 const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -130,7 +129,9 @@ const swaggerOptions = {
         },
 
     },
-    apis: ["./src/api/routes.js"]
+    apis: [
+        "./src/api/microservice/router/tasksManagementRouter.js"
+    ]
 }
 
 export default swaggerOptions;

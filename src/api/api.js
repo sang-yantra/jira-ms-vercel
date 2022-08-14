@@ -3,21 +3,21 @@ import cors from "cors"
 import swaggerUi from "swagger-ui-express"
 
 import swaggerJsDoc from "swagger-jsdoc";
-import swaggerOptions from "../../swagger.js";
+import swaggerOptions from "./microservice/middlewares/swagger/swagger.js";
+import swaggercss from "./microservice/middlewares/swagger/swagger-style.js"
 ///routers
-import routes from "./routes.js";
-import css from "../../swagger-style.js"
+import routes from "./microservice/router/index.js";
 
 const app = express();
-
-
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-const customOptions1 = {
-    customCssUrl: "@/swagger.css"
-}
+
+// customm css for swagger
+// const customOptions1 = {
+//     customCssUrl: "@/swagger.css"
+// }
 
 const customOptions = {
-    customCss: css
+    customCss: swaggercss
 }
 
 app.use(express.static("public"));

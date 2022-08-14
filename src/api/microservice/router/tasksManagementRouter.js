@@ -1,20 +1,11 @@
 import express from "express";
-import * as tasks from "./controllers/tasksController.js";
-import { API_VERSIONING } from "./constants/index.js";
+import * as tasks from "../controllers/tasksController.js";
 
+const routes = express.Router();
 
-const routes = express.Router()
-routes.get("/", function (req, res) {
-    res.send("Welcome to jira ms");
-});
-
-
-
-
-// Routes
 /**
  * @swagger
- * /test:
+ * /api/1/tasks-management/test:
  *  get:
  *    description: Use to test
  *    tags:
@@ -37,7 +28,7 @@ routes.get("/test", function (req, res) {
 
 /**
  * @swagger
- * /api/1/tasks:
+ * /api/1/tasks-management/tasks:
  *  get:
  *    summary: Fetch all tasks
  *    description: Retrieve a single task by id
@@ -47,12 +38,12 @@ routes.get("/test", function (req, res) {
  *      '200':
  *        description: A successful response of task
  */
-routes.get(API_VERSIONING + "/tasks", tasks.getTasks);
+routes.get("/tasks", tasks.getTasks);
 
 
 /**
 * @swagger
-* /api/1/tasks/{id}:
+* /api/1/tasks-management/tasks/{id}:
 *   get:
 *     summary: Retrieve a single task
 *     description: Retrieve a single task by id
@@ -75,11 +66,11 @@ routes.get(API_VERSIONING + "/tasks", tasks.getTasks);
 *             schema:
 *               $ref: "#/components/schemas/Task"
  */
-routes.get(API_VERSIONING + "/tasks/:id", tasks.getTask);
+routes.get("/tasks/:id", tasks.getTask);
 
 /**
  * @swagger
- * /api/1/task:
+ * /api/1/tasks-management/tasks:
  *   post:
  *     summary: Create a new task
  *     description: Create a new task
@@ -95,12 +86,12 @@ routes.get(API_VERSIONING + "/tasks/:id", tasks.getTask);
  *       201:
  *         description: task creatd.
  */
-routes.post(API_VERSIONING + "/task", tasks.createTask);
+routes.post("/tasks", tasks.createTask);
 
 
 /**
  * @swagger
- * /api/1/tasks/{id}:
+ * /api/1/tasks-management/tasks/{id}:
  *   put:
  *     summary: Update a new task
  *     description: Update a new task by id
@@ -122,11 +113,11 @@ routes.post(API_VERSIONING + "/task", tasks.createTask);
  *       201:
  *         description: task creatd.
 */
-routes.put(API_VERSIONING + "/tasks/:id", tasks.updateTask)
+routes.put("/tasks/:id", tasks.updateTask)
 
 /**
 * @swagger
-* /api/1/task/{id}:
+* /api/1/tasks-management/tasks/{id}:
 *   delete:
 *     summary: Delete a single task by id.
 *     description: Retrieve a single task by id
@@ -142,7 +133,7 @@ routes.put(API_VERSIONING + "/tasks/:id", tasks.updateTask)
 *       200:
 *         description: A single user.
 */
-routes.delete(API_VERSIONING + "/task/:id", tasks.deleteTask);
+routes.delete("/tasks/:id", tasks.deleteTask);
 
 export default routes
 
