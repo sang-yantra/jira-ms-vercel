@@ -1,49 +1,15 @@
-/*
-    configure services and middleware
-*/
 import express from "express";
 import cors from "cors"
 import swaggerUi from "swagger-ui-express"
-import swaggerAutoGen from "swagger-autogen"
+
 import swaggerJsDoc from "swagger-jsdoc";
+import swaggerOptions from "../../swagger.js";
 ///routers
 import routes from "./routes.js";
-import css from "../../swagger.js"
+import css from "../../swagger-style.js"
 
 const app = express();
-const swaggerOptions = {
-    swaggerDefinition: {
-        openapi: '3.0.0',
-        info: {
-            title: "Jira Api",
-            description: "Rest aps for Jira app built in Node js",
-            license: {
-                name: 'Licensed Under MIT',
-                url: 'https://spdx.org/licenses/MIT.html',
-            },
-            contact: {
-                name: "Anup Mahato",
-                url: 'https://jsonplaceholder.typicode.com'
-            },
-            servers: [
-                {
-                    url: 'http://localhost:3030',
-                    description: 'Development server',
-                },
-            ]
-        },
-        tags: [{
-            name: "test",
-            description: "test api"
 
-        }, {
-            name: "Tasks",
-            description: "Tasks endpoints"
-
-        }]
-    },
-    apis: ["./src/api/routes.js"]
-}
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 const customOptions1 = {

@@ -21,7 +21,14 @@ routes.get("/", function (req, res) {
  *      - test
  *    responses:
  *      '200':
- *        description: A successful response
+ *        description: Successful operation
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/test"
+ *          application/xml:
+ *            schema:
+ *              $ref: "#/components/schemas/test"
  */
 routes.get("/test", function (req, res) {
     const x = "";
@@ -58,9 +65,16 @@ routes.get(API_VERSIONING + "/tasks", tasks.getTasks);
 *         required: true
 *         description: Numeric ID of the user to get
 *     responses:
-*       200:
-*         description: A single user.
-*/
+*       '200':
+*         description: Successful operation
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/schemas/Task"
+*           application/xml:
+*             schema:
+*               $ref: "#/components/schemas/Task"
+ */
 routes.get(API_VERSIONING + "/tasks/:id", tasks.getTask);
 
 /**
@@ -76,48 +90,11 @@ routes.get(API_VERSIONING + "/tasks/:id", tasks.getTask);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               TITLE:
- *                 type: string
- *                 description: Title of the task.
- *                 example: Task from swagger
- *               DESCRiPTION:
- *                 DESCRiPTION: string
- *                 description: Description pf the task
- *                 example: Description pf the task
- *               ACCEPTANCE_CRITERIA:
- *                 type: string
- *                 description: ACCEPTANCE_CRITERIA of a task
- *                 example: ACCEPTANCE_CRITERIA of a task
- *               NFR:
- *                 type: string
- *                 description: NFR of a task
- *                 example: NFR of a task
- *               STATUS:
- *                 type: string
- *                 description: Status of the task
- *                 example: New
- *               PRIORITY:
- *                 type: string
- *                 description: PRIORITY of the task
- *                 example: Low
- *               ORIGINAL_ESTIMATE:
- *                 type: int
- *                 description: ORIGINAL_ESTIMATE of the task in hrs
- *                 example: 10
- *               COMPLETED:
- *                 type: int
- *                 description: COMPLETED of the task in hrs
- *                 example: 0
- *               REMAINING:
- *                 type: int
- *                 description: REMAINING of the task in hrs
- *                 example: 10
-*     responses:
-*       201:
-*         description: task creatd.
-*/
+ *             $ref: "#/components/schemas/TaskPost"
+ *     responses:
+ *       201:
+ *         description: task creatd.
+ */
 routes.post(API_VERSIONING + "/task", tasks.createTask);
 
 
@@ -140,47 +117,10 @@ routes.post(API_VERSIONING + "/task", tasks.createTask);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               TITLE:
- *                 type: string
- *                 description: Title of the task.
- *                 example: Task from swagger
- *               DESCRiPTION:
- *                 DESCRiPTION: string
- *                 description: Description pf the task
- *                 example: Description pf the task
- *               ACCEPTANCE_CRITERIA:
- *                 type: string
- *                 description: ACCEPTANCE_CRITERIA of a task
- *                 example: ACCEPTANCE_CRITERIA of a task
- *               NFR:
- *                 type: string
- *                 description: NFR of a task
- *                 example: NFR of a task
- *               STATUS:
- *                 type: string
- *                 description: Status of the task
- *                 example: New
- *               PRIORITY:
- *                 type: string
- *                 description: PRIORITY of the task
- *                 example: Low
- *               ORIGINAL_ESTIMATE:
- *                 type: int
- *                 description: ORIGINAL_ESTIMATE of the task in hrs
- *                 example: 10
- *               COMPLETED:
- *                 type: int
- *                 description: COMPLETED of the task in hrs
- *                 example: 0
- *               REMAINING:
- *                 type: int
- *                 description: REMAINING of the task in hrs
- *                 example: 10
-*     responses:
-*       201:
-*         description: task creatd.
+ *             $ref: "#/components/schemas/TaskPost"
+ *     responses:
+ *       201:
+ *         description: task creatd.
 */
 routes.put(API_VERSIONING + "/tasks/:id", tasks.updateTask)
 
