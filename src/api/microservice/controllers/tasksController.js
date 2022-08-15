@@ -91,11 +91,7 @@ export const updateTask = catchErrors(async (req, res) => {
  * controller to delete a task
  */
 export const deleteTask = catchErrors(async (req, res) => {
-    const deleteTask = await prisma.tASK.delete({
-        where: {
-            ID: parseInt(req.params["id"])
-        }
-    })
-    res.json(deleteTask)
+    await new TaskServices().deleteTaskById(req.params.id);
+    res.json("deleted a task successfully")
 })
 

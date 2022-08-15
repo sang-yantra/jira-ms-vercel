@@ -97,3 +97,16 @@ export async function updateTaskById(id, task) {
 
     return updateTask;
 }
+
+
+/**
+ * Delete a task by it's Id
+ * @param {string} id 
+ */
+export async function deleteTaskById(id) {
+    await context.taskInfo.delete({
+        where: {
+            Id: uuidStringToBuffer(id)
+        }
+    })
+}

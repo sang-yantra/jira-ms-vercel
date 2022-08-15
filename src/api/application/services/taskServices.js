@@ -113,6 +113,14 @@ class TaskServices {
         }
         return taskwithParseIds;
     }
+
+    /**
+     * Delete a task by it's Id
+     * @param {string} id 
+     */
+    async deleteTaskById(id) {
+        await tasksRepo.deleteTaskById(id)
+    }
 }
 
 export default TaskServices;
