@@ -87,41 +87,51 @@ const swaggerOptions = {
                 "TaskPost": {
                     type: "object",
                     properties: {
-                        "TITLE": {
+                        "Title": {
                             type: "string",
-                            example: "Testin task"
+                            example: "Testing task"
                         },
-                        "DESCRiPTION": {
+                        "Type": {
+                            type: "string",
+                            example: "Normal"
+                        },
+                        "Description": {
                             type: "string",
                             example: "This is a testing task"
                         },
-                        "ACCEPTANCE_CRITERIA": {
+                        "Acceptance_Criteria": {
                             type: "string",
                             example: "verify that this is completed"
                         },
-                        "NFR": {
+                        "Nfr": {
                             type: "string",
                             "format": "nullable"
                         },
-                        "STATUS": {
+                        "Status": {
                             type: "string",
-                            example: "NEW"
+                            example: "New"
                         },
-                        "PRIORITY": {
-                            type: "string",
-                            example: "LOW"
-                        },
-                        "ORIGINAL_ESTIMATE": {
+                        "Original_Estimate": {
                             type: "number",
                             example: "10"
                         },
-                        "COMPLETED": {
+                        "Completed": {
                             type: "number",
                             example: "7"
                         },
-                        "REMAINING": {
+                        "Remaining": {
                             type: "number",
                             example: "3"
+                        },
+                        "Created_Date": {
+                            type: "string",
+                            format: "date-time",
+                            example: new Date()
+                        },
+                        "Updated_Date": {
+                            type: "string",
+                            format: "date-time",
+                            example: new Date()
                         }
                     }
                 }

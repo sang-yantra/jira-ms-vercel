@@ -2,6 +2,11 @@ import context from "../context/jiraContext.js"
 import { stringify, parse } from "uuid";
 import { uuidStringToBuffer } from "../../../utils/index.js"
 
+/**
+ * Function to get Pbis by TeamId
+ * @param {*} teamId 
+ * @returns 
+ */
 export async function getPbisByTeamId(teamId) {
     const pbiList = await context.pbiInfo.findMany({
         where: {
@@ -19,4 +24,19 @@ export async function getPbisByTeamId(teamId) {
     });
 
     return pbiList
+}
+
+/**
+ * Function to get Pbi by Id
+ * @param {String} Id 
+ * @return Pbi
+ */
+export async function getPbiById(Id) {
+    const pbiById = await context.pbiInfo.findFirstOrThrow({
+        where: {
+            Id: uuidStringToBuffer(Id)
+        }
+    })
+
+    return pbiById;
 }

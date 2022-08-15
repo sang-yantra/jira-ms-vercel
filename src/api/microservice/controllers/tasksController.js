@@ -1,9 +1,15 @@
 
 import { PrismaClient } from "@prisma/client";
+import _ from "lodash";
+import superjson from "superjson"
 import { catchErrors } from "../../domain/errors/asyncCatch.js";
 import TaskServices from "../../application/services/taskServices.js";
-const prisma = new PrismaClient();
+import TaskInfoDto from "../../application/dto/TaskInfoDto.js"
 
+
+const prisma = new PrismaClient();
+const PBI_ID = 'f57da697-1bfa-11ed-a3b2-b622babdeb3e';
+const ASSIGNED_TO = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
 
 /**
  * Controller to get all tasks 
@@ -20,13 +26,8 @@ export const getTasks = catchErrors(async (req, res) => {
  * Controller to get a particular task by id 
  */
 export const getTask = catchErrors(async (req, res) => {
-
-    const task = await prisma.tASK.findUnique({
-        where: {
-            ID: parseInt(req.params["id"])
-        }
-    })
-
+    ///7aab6d29-1bfc-11ed-a3b2-b622babdeb3e
+    const task = await new TaskServices().getTaskById(req.params.id);
     res.json(task)
 })
 
@@ -35,20 +36,19 @@ export const getTask = catchErrors(async (req, res) => {
  * Controller to create a task
  */
 export const createTask = catchErrors(async (req, res) => {
-    const x = "";
-    const task = await prisma.tASK.create({
-        data: {
-            TITLE: req.body.TITLE,
-            DESCRiPTION: req.body.DESCRiPTION,
-            ACCEPTANCE_CRITERIA: req.body.ACCEPTANCE_CRITERIA,
-            NFR: req.body.NFR,
-            STATUS: req.body.STATUS,
-            PRIORITY: req.body.PRIORITY,
-            ORIGINAL_ESTIMATE: req.body.ORIGINAL_ESTIMATE,
-            COMPLETED: req.body.COMPLETED,
-            REMAINING: req.body.REMAINING
-        }
-    })
+
+    let payload = _.cloneDeep(req.body);
+    if (typeof payload !== 'object')
+        return Error("invalid payload");
+    const newTask = {
+        ...payload,
+        PbiId: PBI_ID,
+        Assigned_To: ASSIGNED_TO,
+        Created_Date: new Date(payload.Created_Date),
+        Updated_Date: new Date(payload.Updated_Date)
+    };
+
+    const task = await new TaskServices().createTask(newTask)
 
     res.json(task)
 })
@@ -57,23 +57,21 @@ export const createTask = catchErrors(async (req, res) => {
  * Controller to update a task
  */
 export const updateTask = catchErrors(async (req, res) => {
-    const updateTask = await prisma.tASK.update({
-        where: {
-            ID: parseInt(req.params["id"])
-        },
-        data: {
-            TITLE: req.body.TITLE,
-            DESCRiPTION: req.body.DESCRiPTION,
-            ACCEPTANCE_CRITERIA: req.body.ACCEPTANCE_CRITERIA,
-            NFR: req.body.NFR,
-            STATUS: req.body.STATUS,
-            PRIORITY: req.body.PRIORITY,
-            ORIGINAL_ESTIMATE: req.body.ORIGINAL_ESTIMATE,
-            COMPLETED: req.body.COMPLETED,
-            REMAINING: req.body.REMAINING
-        }
-    })
-    res.json(updateTask)
+    let payload = _.cloneDeep(req.body);
+    if (typeof payload !== 'object')
+        return Error("invalid payload");
+
+    const payloadTask = {
+        ...payload,
+        Pbi_Id: payload.Pbi_Id ?? PBI_ID,
+        Assigned_To: payload.Assigned_To ?? ASSIGNED_TO,
+        Created_Date: new Date(payload.Created_Date),
+        Updated_Date: new Date(payload.Updated_Date)
+    };
+
+    const updatedTask = await new TaskServices().updateTask(req.params.id, payloadTask)
+
+    res.json(updatedTask)
 })
 
 
@@ -81,11 +79,7 @@ export const updateTask = catchErrors(async (req, res) => {
  * controller to delete a task
  */
 export const deleteTask = catchErrors(async (req, res) => {
-    const deleteTask = await prisma.tASK.delete({
-        where: {
-            ID: parseInt(req.params["id"])
-        }
-    })
-    res.json(deleteTask)
+    await new TaskServices().deleteTaskById(req.params.id);
+    res.json("deleted a task successfully")
 })
 
