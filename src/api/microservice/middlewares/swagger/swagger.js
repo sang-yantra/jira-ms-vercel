@@ -107,9 +107,9 @@ const swaggerOptions = {
                             type: "string",
                             "format": "nullable"
                         },
-                        "STAStatusTUS": {
+                        "Status": {
                             type: "string",
-                            example: "NEW"
+                            example: "New"
                         },
                         "Original_Estimate": {
                             type: "number",
