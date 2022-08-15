@@ -7,7 +7,6 @@ import * as tasksRepo from "../../infrastructure/repos/tasksRepo.js"
 import * as pbiRepo from "../../infrastructure/repos/pbiRepo.js"
 import { stringify } from "uuid";
 import PbiDto from "../dto/PbiDto.js";
-import jiraContext from "../../infrastructure/context/jiraContext.js";
 
 
 class TaskServices {
@@ -16,17 +15,7 @@ class TaskServices {
     }
 
     async getTasks(teamId) {
-        const dbpbis = await jiraContext.pbiInfo.findMany({
-            select: {
-                Title: true,
-                Type: true,
-                Status: true
-            }
-        })
-        return dbpbis;
-
-
-
+        const dbpbis = await pbiRepo.getPbisByTeamId(teamId)
         const pbIds = dbpbis.map(pbi => stringify(pbi.Id))
         const dbtasks = await tasksRepo.getTasksbyPbIds(pbIds)
 

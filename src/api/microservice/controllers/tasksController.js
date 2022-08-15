@@ -11,14 +11,7 @@ const prisma = new PrismaClient();
 export const getTasks = catchErrors(async (req, res) => {
     const memberId = "a2a64c91-1bf8-11ed-a3b2-b622babdeb3e"
     const teamId = "a3c0a19e-1bf7-11ed-a3b2-b622babdeb3e"
-    //const tasks = await new TaskServices().getTasks(teamId);
-    const tasks = await prisma.pbiInfo.findMany({
-        select: {
-            Title: true,
-            Type: true,
-            Status: true
-        }
-    });
+    const tasks = await new TaskServices().getTasks(teamId);
     res.json(tasks)
 })
 
