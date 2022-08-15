@@ -123,6 +123,16 @@ const swaggerOptions = {
                             type: "number",
                             example: "3"
                         },
+                        "Created_Date": {
+                            type: "string",
+                            format: "date-time",
+                            example: new Date()
+                        },
+                        "Updated_Date": {
+                            type: "string",
+                            format: "date-time",
+                            example: new Date()
+                        }
                     }
                 }
             },

@@ -51,11 +51,13 @@ class TaskServices {
 
     async createTask(task) {
         const createdtask = await tasksRepo.createTask(task);
-        const formattedtask = createdtask;
-        formattedtask.Id = stringify(formattedtask.Id);
-        formattedtask.Pbi_Id = stringify(formattedtask.Pbi_Id);
-        formattedtask.Assigned_To = stringify(formattedtask.Assigned_To)
-        return formattedtask;
+        const taskwithParseIds = {
+            ...createdtask,
+            Id: stringify(createdtask.Id),
+            Pbi_Id: stringify(createdtask.Pbi_Id),
+            Assigned_To: stringify(createdtask.Assigned_To)
+        }
+        return taskwithParseIds;
     }
 }
 
