@@ -1,5 +1,4 @@
 /// dto models
-import TaskDto from "../dto/TaskDto.js";
 import TaskInfoDto from "../dto/TaskInfoDto.js";
 
 /// repos
@@ -48,6 +47,15 @@ class TaskServices {
 
     getTask() {
 
+    }
+
+    async createTask(task) {
+        const createdtask = await tasksRepo.createTask(task);
+        const formattedtask = createdtask;
+        formattedtask.Id = stringify(formattedtask.Id);
+        formattedtask.Pbi_Id = stringify(formattedtask.Pbi_Id);
+        formattedtask.Assigned_To = stringify(formattedtask.Assigned_To)
+        return formattedtask;
     }
 }
 
