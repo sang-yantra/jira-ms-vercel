@@ -15,6 +15,23 @@ class TaskServices {
 
     async getTasks(teamId) {
         const dbpbis = await pbiRepo.getPbisByTeamId(teamId)
+
+        const pbiTemp = dbpbis.map(dbpbi => {
+            let pbi = PbiDto;
+            pbi.Id = stringify(dbpbi.Id);
+            pbi.Team_Id = stringify(dbpbi.Team_Id);
+            pbi.Title = dbpbi.Title;
+            pbi.Status = dbpbi.Status;
+            pbi.Type = dbpbi.Type;
+            pbi.Effort = dbpbi.Effort;
+
+            return pbi;
+        });
+
+        return pbiTemp;
+
+
+
         const pbIds = dbpbis.map(pbi => stringify(pbi.Id))
         const dbtasks = await tasksRepo.getTasksbyPbIds(pbIds)
 
