@@ -8,7 +8,8 @@ import TaskInfoDto from "../../application/dto/TaskInfoDto.js"
 
 
 const prisma = new PrismaClient();
-
+const PBI_ID = 'f57da697-1bfa-11ed-a3b2-b622babdeb3e';
+const ASSIGNED_TO = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
 
 /**
  * Controller to get all tasks 
@@ -39,25 +40,10 @@ export const createTask = catchErrors(async (req, res) => {
     let payload = _.cloneDeep(req.body);
     if (typeof payload !== 'object')
         return Error("invalid payload");
-    // // const newTask = TaskInfoDto;
-    // // newTask.PbiId = "f57da697-1bfa-11ed-a3b2-b622babdeb3e"
-    // // newTask.Title = payload.Title;
-    // // newTask.Type = payload.Type;
-    // // newTask.Description = payload.Description;
-    // // newTask.Status = payload.Status;
-    // // newTask.Acceptance_Criteria = payload.Acceptance_Criteria;
-    // // newTask.Nfr = payload.Nfr;
-    // // newTask.Original_Estimate = payload.Original_Estimate;
-    // // newTask.Remaining = payload.Remaining;
-    // // newTask.Completed = payload.Completed;
-    // // newTask.Assigned_To = "6cfde996-1bf8-11ed-8c66-0897987103eb";
-    // // newTask.Created_Date = new Date(payload.Created_Date);
-    // // newTask.Updated_Date = new Date(payload.Updated_Date);
-
     const newTask = {
         ...payload,
-        PbiId: "f57da697-1bfa-11ed-a3b2-b622babdeb3e",
-        Assigned_To: "6cfde996-1bf8-11ed-8c66-0897987103eb",
+        PbiId: PBI_ID,
+        Assigned_To: ASSIGNED_TO,
         Created_Date: new Date(payload.Created_Date),
         Updated_Date: new Date(payload.Updated_Date)
     };
@@ -77,6 +63,8 @@ export const updateTask = catchErrors(async (req, res) => {
 
     const payloadTask = {
         ...payload,
+        Pbi_Id: payload.Pbi_Id ?? PBI_ID,
+        Assigned_To: payload.Assigned_To ?? ASSIGNED_TO,
         Created_Date: new Date(payload.Created_Date),
         Updated_Date: new Date(payload.Updated_Date)
     };
