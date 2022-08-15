@@ -8,6 +8,7 @@
     "build": "prisma generate",
     "dev": "nodemon index.js",
     "start": "node index.js",
+    "postinstall": "prisma db pull && prisma generate",
     "fetch": "prisma db pull && prisma generate",
     "swagger-autogen": "node swagger.js"
   },
