@@ -26,7 +26,7 @@ class TaskServices {
         const dbtasks = await tasksRepo.getTasksbyPbIds(pbIds)
 
         const tasksWithPbi = dbtasks.map(dbtask => {
-            let task = TaskInfoDto;
+            const task = { ...TaskInfoDto };
             task.Id = stringify(dbtask.Id);
             task.Pbi = dbpbis.filter(dbpbi => stringify(dbpbi.Id) === stringify(dbtask.Pbi_Id))
                 .map(dbpbi => {
