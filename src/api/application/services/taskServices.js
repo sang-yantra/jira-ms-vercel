@@ -26,8 +26,13 @@ class TaskServices {
         const dbtasks = await tasksRepo.getTasksbyPbIds(pbIds)
 
         const tasksWithPbi = dbtasks.map(dbtask => {
-            let task = TaskInfoDto;
+            const task = { ...TaskInfoDto };
             task.Id = stringify(dbtask.Id);
+            task.Title = dbtask.Title;
+            task.Type = dbtask.Type;
+            task.Status = dbtask.Status;
+            task.Original_Estimate = dbtask.Original_Estimate;
+            task.Completed = dbtask.Completed;
             task.Pbi = dbpbis.filter(dbpbi => stringify(dbpbi.Id) === stringify(dbtask.Pbi_Id))
                 .map(dbpbi => {
                     let pbi = PbiDto;
@@ -40,10 +45,6 @@ class TaskServices {
 
                     return pbi;
                 });
-            task.Title = dbtask.Title;
-            task.Type = dbtask.Type;
-            task.Status = dbtask.Status;
-            task.Remaining = dbtask.Remaining;
 
             return task;
 

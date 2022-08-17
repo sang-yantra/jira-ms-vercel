@@ -20,6 +20,8 @@ export async function getTasksbyPbIds(pbiIds) {
             Pbi_Id: true,
             Title: true,
             Status: true,
+            Completed: true,
+            Original_Estimate: true,
         }
     });
     return tasks;
