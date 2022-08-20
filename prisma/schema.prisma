@@ -24,10 +24,10 @@ model TASK {
 }
 
 model Teams {
-  Id          Bytes   @id @db.Binary(16)
-  Name        String  @db.VarChar(200)
-  Description String? @db.VarChar(250)
-  Members TeamsMembersAssociation[]
+  Id          Bytes                     @id @db.Binary(16)
+  Name        String                    @db.VarChar(200)
+  Description String?                   @db.VarChar(250)
+  Members     TeamsMembersAssociation[]
 }
 
 model Attachments {
@@ -38,23 +38,22 @@ model Attachments {
   Attach_File    Bytes?
 }
 
-model TeamsMembersAssociation {  
-  Team_Id   Bytes @db.Binary(16)
-  Team      Teams @relation(fields:[Team_Id],referenes:[Id])
-  Member_Id Bytes @db.Binary(16)
-  Member    Members @relation(fields:[Member_Id],referenes:[Id])
-  
-  @@id([Team_Id,Member_Id])
+model TeamsMembersAssociation {
+  Team_Id   Bytes   @db.Binary(16)
+  Team      Teams   @relation(fields: [Team_Id], references: [Id])
+  Member_Id Bytes   @db.Binary(16)
+  Member    Members @relation(fields: [Member_Id], references: [Id])
+
+  @@id([Team_Id, Member_Id])
 }
 
 model Members {
-  Id          Bytes   @id @db.Binary(16) 
-  Name        String  @db.VarChar(200)
-  Email       String? @db.VarChar(100)
-  Role        String  @db.VarChar(150)
+  Id           Bytes                     @id @db.Binary(16)
+  Name         String                    @db.VarChar(200)
+  Email        String?                   @db.VarChar(100)
+  Role         String                    @db.VarChar(150)
   Member_Photo Bytes?
-  Teams TeamsMembersAssociation[]
-
+  Teams        TeamsMembersAssociation[]
 }
 
 model PbiInfo {
