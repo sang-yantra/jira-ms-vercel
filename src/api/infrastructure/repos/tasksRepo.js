@@ -20,6 +20,8 @@ export async function getTasksbyPbIds(pbiIds) {
             Pbi_Id: true,
             Title: true,
             Status: true,
+            Completed: true,
+            Original_Estimate: true,
         }
     });
     return tasks;
@@ -107,6 +109,17 @@ export async function deleteTaskById(id) {
     await context.taskInfo.delete({
         where: {
             Id: uuidStringToBuffer(id)
+        }
+    })
+}
+
+export async function patchTaskStatusById(Id, Status) {
+    await context.taskInfo.update({
+        where: {
+            Id: uuidStringToBuffer(Id)
+        },
+        data: {
+            Status: Status
         }
     })
 }

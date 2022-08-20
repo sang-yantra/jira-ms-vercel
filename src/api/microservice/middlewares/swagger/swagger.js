@@ -1,4 +1,17 @@
 import swaggerJsDoc from "swagger-jsdoc";
+
+const TaskStatusUpdateBody = {
+    "TaskPatch": {
+        type: "object",
+        properties: {
+            "Status": {
+                type: "string",
+                example: "New"
+            }
+        }
+    }
+}
+
 const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -28,6 +41,10 @@ const swaggerOptions = {
             name: "Tasks",
             description: "Tasks endpoints"
 
+        }, {
+            name: "Teams",
+            description: "Teams endpoints"
+
         }],
         components: {
             schemas: {
@@ -36,51 +53,6 @@ const swaggerOptions = {
                     properties: {
                         "id": {
                             type: "number"
-                        }
-                    }
-                },
-                "Task": {
-                    type: "object",
-                    properties: {
-                        "ID": {
-                            type: "number",
-                            example: "1"
-                        },
-                        "TITLE": {
-                            type: "string",
-                            example: "Testin task"
-                        },
-                        "DESCRiPTION": {
-                            type: "string",
-                            example: "This is a testing task"
-                        },
-                        "ACCEPTANCE_CRITERIA": {
-                            type: "string",
-                            example: "verify that this is completed"
-                        },
-                        "NFR": {
-                            type: "string",
-                            "format": "nullable"
-                        },
-                        "STATUS": {
-                            type: "string",
-                            example: "NEW"
-                        },
-                        "PRIORITY": {
-                            type: "string",
-                            example: "LOW"
-                        },
-                        "ORIGINAL_ESTIMATE": {
-                            type: "number",
-                            example: "10"
-                        },
-                        "COMPLETED": {
-                            type: "number",
-                            example: "7"
-                        },
-                        "REMAINING": {
-                            type: "number",
-                            example: "3"
                         }
                     }
                 },
@@ -134,13 +106,28 @@ const swaggerOptions = {
                             example: new Date()
                         }
                     }
+                },
+                "TaskStatusUpdate": TaskStatusUpdateBody.TaskPatch,
+                "TeamPost": {
+                    type: "object",
+                    properties: {
+                        "Name": {
+                            type: "string",
+                            example: "Normal"
+                        },
+                        "Description": {
+                            type: "string",
+                            example: "This is a testing task"
+                        }
+                    }
                 }
             },
         },
 
     },
     apis: [
-        "./src/api/microservice/router/tasksManagementRouter.js"
+        "./src/api/microservice/router/tasksManagementRouter.js",
+        "./src/api/microservice/router/teamsManagementRouter.js"
     ]
 }
 

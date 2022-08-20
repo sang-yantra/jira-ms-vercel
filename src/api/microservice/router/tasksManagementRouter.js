@@ -135,5 +135,32 @@ routes.put("/tasks/:id", tasks.updateTask)
 */
 routes.delete("/tasks/:id", tasks.deleteTask);
 
+
+/**
+ * @swagger
+ * /api/1/tasks-management/tasks/{id}/status:
+ *   patch:
+ *     summary: Update the status of a task
+ *     description: Update the status of a task
+ *     tags:
+ *       - Tasks
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: integer
+ *         required: true
+ *         description: Numeric ID of the user to get
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/TaskStatusUpdate"
+ *     responses:
+ *       204:
+ *         description: No content.
+*/
+routes.patch("/tasks/:id/status", tasks.patchTaskStatus)
+
 export default routes
 

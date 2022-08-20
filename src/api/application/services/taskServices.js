@@ -7,6 +7,7 @@ import * as pbiRepo from "../../infrastructure/repos/pbiRepo.js"
 import * as memberRepo from "../../infrastructure/repos/memberRepo.js"
 import { stringify } from "uuid";
 import PbiDto from "../dto/PbiDto.js";
+import id from "faker/lib/locales/id_ID/index.js";
 
 
 class TaskServices {
@@ -26,8 +27,13 @@ class TaskServices {
         const dbtasks = await tasksRepo.getTasksbyPbIds(pbIds)
 
         const tasksWithPbi = dbtasks.map(dbtask => {
-            let task = TaskInfoDto;
+            const task = { ...TaskInfoDto };
             task.Id = stringify(dbtask.Id);
+            task.Title = dbtask.Title;
+            task.Type = dbtask.Type;
+            task.Status = dbtask.Status;
+            task.Original_Estimate = dbtask.Original_Estimate;
+            task.Completed = dbtask.Completed;
             task.Pbi = dbpbis.filter(dbpbi => stringify(dbpbi.Id) === stringify(dbtask.Pbi_Id))
                 .map(dbpbi => {
                     let pbi = PbiDto;
@@ -40,10 +46,6 @@ class TaskServices {
 
                     return pbi;
                 });
-            task.Title = dbtask.Title;
-            task.Type = dbtask.Type;
-            task.Status = dbtask.Status;
-            task.Remaining = dbtask.Remaining;
 
             return task;
 
@@ -120,6 +122,11 @@ class TaskServices {
      */
     async deleteTaskById(id) {
         await tasksRepo.deleteTaskById(id)
+    }
+
+
+    async patchTaskStatusById(Id, Status) {
+        await tasksRepo.patchTaskStatusById(Id, Status)
     }
 }
 
