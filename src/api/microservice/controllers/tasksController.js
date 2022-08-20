@@ -83,3 +83,12 @@ export const deleteTask = catchErrors(async (req, res) => {
     res.json("deleted a task successfully")
 })
 
+/**
+ * Controller to update status of the task
+ */
+export const patchTaskStatus = catchErrors(async (req, res) => {
+    await new TaskServices().patchTaskStatusById(req.params.id, req.body.Status)
+    res.json("No Content")
+})
+
+

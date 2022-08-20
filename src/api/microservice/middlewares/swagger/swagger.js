@@ -1,4 +1,17 @@
 import swaggerJsDoc from "swagger-jsdoc";
+
+const TaskStatusUpdateBody = {
+    "TaskPatch": {
+        type: "object",
+        properties: {
+            "Status": {
+                type: "string",
+                example: "New"
+            }
+        }
+    }
+}
+
 const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -28,7 +41,7 @@ const swaggerOptions = {
             name: "Tasks",
             description: "Tasks endpoints"
 
-        },{
+        }, {
             name: "Teams",
             description: "Teams endpoints"
 
@@ -42,7 +55,7 @@ const swaggerOptions = {
                             type: "number"
                         }
                     }
-                },                
+                },
                 "TaskPost": {
                     type: "object",
                     properties: {
@@ -94,18 +107,19 @@ const swaggerOptions = {
                         }
                     }
                 },
-                "TeamPost":{
+                "TaskStatusUpdate": TaskStatusUpdateBody.TaskPatch,
+                "TeamPost": {
                     type: "object",
                     properties: {
-                    "Name": {
-                        type: "string",
-                        example: "Normal"
-                    },
-                    "Description": {
-                        type: "string",
-                        example: "This is a testing task"
+                        "Name": {
+                            type: "string",
+                            example: "Normal"
+                        },
+                        "Description": {
+                            type: "string",
+                            example: "This is a testing task"
+                        }
                     }
-                }
                 }
             },
         },

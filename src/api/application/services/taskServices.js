@@ -7,6 +7,7 @@ import * as pbiRepo from "../../infrastructure/repos/pbiRepo.js"
 import * as memberRepo from "../../infrastructure/repos/memberRepo.js"
 import { stringify } from "uuid";
 import PbiDto from "../dto/PbiDto.js";
+import id from "faker/lib/locales/id_ID/index.js";
 
 
 class TaskServices {
@@ -121,6 +122,11 @@ class TaskServices {
      */
     async deleteTaskById(id) {
         await tasksRepo.deleteTaskById(id)
+    }
+
+
+    async patchTaskStatusById(Id, Status) {
+        await tasksRepo.patchTaskStatusById(Id, Status)
     }
 }
 

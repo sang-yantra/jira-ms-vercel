@@ -112,3 +112,14 @@ export async function deleteTaskById(id) {
         }
     })
 }
+
+export async function patchTaskStatusById(Id, Status) {
+    await context.taskInfo.update({
+        where: {
+            Id: uuidStringToBuffer(Id)
+        },
+        data: {
+            Status: Status
+        }
+    })
+}
