@@ -27,6 +27,7 @@ model Teams {
   Id          Bytes   @id @db.Binary(16)
   Name        String  @db.VarChar(200)
   Description String? @db.VarChar(250)
+  Members TeamsMembersAssociation[]
 }
 
 model Attachments {
@@ -37,24 +38,23 @@ model Attachments {
   Attach_File    Bytes?
 }
 
-model TeamsMembersAssociation {
-  Id        Bytes @id @db.Binary(16)
+model TeamsMembersAssociation {  
   Team_Id   Bytes @db.Binary(16)
+  Team      Teams @relation(fields:[Team_Id],referenes:[Id])
   Member_Id Bytes @db.Binary(16)
-
-  @@index([Team_Id], map: "teams_id_idx")
-  @@index([Member_Id], map: "members_id_idx")
+  Member    Members @relation(fields:[Member_Id],referenes:[Id])
+  
+  @@id([Team_Id,Member_Id])
 }
 
 model Members {
-  Id          Bytes   @id @db.Binary(16)
-  Team_Id     Bytes?  @db.Binary(16)
+  Id          Bytes   @id @db.Binary(16) 
   Name        String  @db.VarChar(200)
   Email       String? @db.VarChar(100)
   Role        String  @db.VarChar(150)
-  Attach_File Bytes?
+  Member_Photo Bytes?
+  Teams TeamsMembersAssociation[]
 
-  @@index([Team_Id], map: "teams_id_idx")
 }
 
 model PbiInfo {
