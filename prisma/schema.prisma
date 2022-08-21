@@ -24,30 +24,36 @@ model TASK {
 }
 
 model Teams {
-  Id          Bytes   @id @db.Binary(16)
-  Name        String  @db.VarChar(200)
-  Description String? @db.VarChar(250)
+  Id          Bytes                     @id @db.Binary(16)
+  Name        String                    @db.VarChar(200)
+  Description String?                   @db.VarChar(250)
+  Members     TeamsMembersAssociation[]
 }
 
 model Attachments {
-  Id          Bytes  @id @db.Binary(16)
-  Pbi_Id      Bytes? @db.Binary(16)
-  Task_Id     Bytes? @db.Binary(16)
-  Name        String @db.VarChar(200)
-  Attach_File Bytes?
+  Id             Bytes   @id @db.Binary(16)
+  Entity_Type    String? @db.VarChar(200)
+  Entity_Type_Id Bytes?  @db.Binary(16)
+  Name           String  @db.VarChar(200)
+  Attach_File    Bytes?
+}
 
-  @@index([Pbi_Id], map: "pbiinfo_id_idx")
-  @@index([Task_Id], map: "task_id_idx")
+model TeamsMembersAssociation {
+  Team_Id   Bytes   @db.Binary(16)
+  Team      Teams   @relation(fields: [Team_Id], references: [Id])
+  Member_Id Bytes   @db.Binary(16)
+  Member    Members @relation(fields: [Member_Id], references: [Id])
+
+  @@id([Team_Id, Member_Id])
 }
 
 model Members {
-  Id      Bytes   @id @db.Binary(16)
-  Team_Id Bytes?  @db.Binary(16)
-  Name    String  @db.VarChar(200)
-  Email   String? @db.VarChar(100)
-  Role    String  @db.VarChar(150)
-
-  @@index([Team_Id], map: "teams_id_idx")
+  Id           Bytes                     @id @db.Binary(16)
+  Name         String                    @db.VarChar(200)
+  Email        String?                   @db.VarChar(100)
+  Role         String                    @db.VarChar(150)
+  Member_Photo Bytes?
+  Teams        TeamsMembersAssociation[]
 }
 
 model PbiInfo {
@@ -89,12 +95,6 @@ model TaskInfo {
 
   @@index([Assigned_To], map: "members_id_idx")
   @@index([Pbi_Id], map: "pbiinfo_id_idx")
-}
-
-model Teams12 {
-  Id          String  @id @db.VarChar(255)
-  Name        String  @db.VarChar(200)
-  Description String? @db.VarChar(250)
 }
 
 enum TaskInfo_Type {
