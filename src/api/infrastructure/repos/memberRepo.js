@@ -41,13 +41,14 @@ export async function getMemberById(Id) {
     //     }
     // })
 
-    return await context.members.findFirstOrThrow({
+    const memberById= await context.members.findFirstOrThrow({
         where: {
             Id: uuidStringToBuffer(Id)
         }
+        
     })
 
-
+    return memberById;
     /// Example of creating new member, new association with already existing team
     // const onlyMembers = await context.members.create({
     //     data: {

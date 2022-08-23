@@ -97,6 +97,11 @@ model TaskInfo {
   @@index([Pbi_Id], map: "pbiinfo_id_idx")
 }
 
+model UserTest {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(256)
+}
+
 enum TaskInfo_Type {
   Normal
   Bug
