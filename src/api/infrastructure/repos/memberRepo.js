@@ -19,10 +19,10 @@ export async function getMemberById(Id) {
     const x = "";
     /// create new association with already existing team and member
 
-    const tasksPbiJoin = await context.$queryRaw`
-    SELECT * FROM TaskInfo 
-    JOIN PbiInfo on TaskInfo.Pbi_Id = PbiInfo.Id
-    `
+    // const tasksPbiJoin = await context.$queryRaw`
+    // SELECT * FROM TaskInfo 
+    // JOIN PbiInfo on TaskInfo.Pbi_Id = PbiInfo.Id
+    // `
 
     // const association = await context.members.update({
     //     where: {
@@ -69,26 +69,29 @@ export async function getMemberById(Id) {
     // })
 
     /// creating new member, new association, and new team
-    // const memberWithTeam = await context.members.create({
-    //     data: {
-    //         Id: uuidStringToBuffer(uuidv4()),
-    //         Name: "Mark zuker",
-    //         Email: "mark@facebook.com",
-    //         Role: 'Admin',
-    //         Teams: {
-    //             create: [{
-    //                 Team: {
-    //                     create: {
-    //                         Id: uuidStringToBuffer(uuidv4()),
-    //                         Name: "testsing team with relation"
-    //                     }
-    //                 }
-    //             }
-    //             ]
-    //         }
+    const memberWithTeam = await context.members.create({
+        data: {
+            Id: uuidStringToBuffer(uuidv4()),
+            Name: "Anup Mahato test",
+            Email: "anup.mahato@gmail.com",
+            Role: 'Admin',
+            Teams: {
+                create: [{
+                    Team: {
+                        create: {
+                            Id: uuidStringToBuffer(uuidv4()),
+                            Name: "Admin",
+                            Description: "Team to handle admin activity"
+                        }
+                    }
+                }
+                ]
+            }
 
-    //     }
-    // })
+        }
+    })
+
+    return memberWithTeam;
 }
 
 export async function getAllTeamsOfMember(Id) {
@@ -101,3 +104,10 @@ export async function getAllTeamsOfMember(Id) {
     return members
 }
 
+export async function getMemberById(Id) {
+    return await context.members.findFirstOrThrow({
+        where: {
+            Id: uuidStringToBuffer(Id)
+        }
+    })
+}
