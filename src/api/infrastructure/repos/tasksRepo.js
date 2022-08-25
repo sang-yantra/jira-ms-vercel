@@ -45,7 +45,7 @@ export async function createTask(task) {
       Original_Estimate: task.Original_Estimate,
       Remaining: task.Remaining,
       Completed: task.Completed,
-      Assigned_To: uuidStringToBuffer(task.Assigned_To),
+      Assigned_To: uuidStringToBuffer(task.AssignedTo),
       Created_Date: task.Created_Date,
       Updated_Date: task.Updated_Date,
     },
