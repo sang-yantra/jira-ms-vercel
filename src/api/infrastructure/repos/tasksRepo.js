@@ -26,6 +26,29 @@ export async function getTasksbyPbIds(pbiIds) {
   return tasks;
 }
 
+export async function getTasksWithPbiByTeamId(teamId) {
+  const tasksWithPbi = await context.$queryRaw`
+  SELECT 
+   ti.Id,
+   ti.Pbi_Id,
+   ti.Title,
+   ti.Type,
+   ti.Status,
+   ti.Original_Estimate,
+   ti.Completed,
+   pi.Team_Id,
+   pi.Title AS Pbi_Title,
+   pi.Status AS Pbi_Status,
+   pi.Type AS Pbi_Type,
+   pi.Effort AS Pbi_Effort
+   from TaskInfo As ti 
+  JOIN PbiInfo As pi on BIN_TO_UUID(ti.Pbi_Id) = BIN_TO_UUID(pi.Id)
+  WHERE BIN_TO_UUID(pi.Team_Id) = ${teamId}
+  `;
+
+  return tasksWithPbi;
+}
+
 /**
  * Function to create a task in db
  * @param {object} task

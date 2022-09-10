@@ -13,6 +13,60 @@ const TaskStatusUpdateBody = {
   },
 };
 
+const ChatRoomBody = {
+  ChatRoomPost: {
+    type: "object",
+    properties: {
+      Title: {
+        type: "string",
+        example: "Title of a chat room" + uuidv4(),
+      },
+      Description: {
+        type: "string",
+        example: "This is a description of a chat room",
+      },
+      Type: {
+        type: "string",
+        example: "General",
+      },
+      CreatedDateTime: {
+        type: "string",
+        format: "date-time",
+        example: new Date(),
+      },
+      CreatedBy: {
+        type: "string",
+        example: "anupmahato033@gmail.com",
+      },
+    },
+  },
+};
+
+const Teams = {
+  TeamPost: {
+    type: "object",
+    properties: {
+      Name: {
+        type: "string",
+        example: "Normal",
+      },
+      Description: {
+        type: "string",
+        example: "This is a testing task",
+      },
+    },
+  },
+  TeamPostImage: {
+    type: "object",
+    properties: {
+      file: {
+        type: "string",
+        format: "binary",
+      },
+    },
+  },
+};
+
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -46,6 +100,10 @@ const swaggerOptions = {
       {
         name: "Teams",
         description: "Teams endpoints",
+      },
+      {
+        name: "Chat Room",
+        description: "Chat room endpoints",
       },
     ],
     components: {
@@ -118,25 +176,16 @@ const swaggerOptions = {
           },
         },
         TaskStatusUpdate: TaskStatusUpdateBody.TaskPatch,
-        TeamPost: {
-          type: "object",
-          properties: {
-            Name: {
-              type: "string",
-              example: "Normal",
-            },
-            Description: {
-              type: "string",
-              example: "This is a testing task",
-            },
-          },
-        },
+        TeamPost: Teams.TeamPost,
+        TeamPostImage: Teams.TeamPostImage,
+        ChatRoomPost: ChatRoomBody.ChatRoomPost,
       },
     },
   },
   apis: [
     "./src/api/microservice/router/tasksManagementRouter.js",
     "./src/api/microservice/router/teamsManagementRouter.js",
+    "./src/api/microservice/router/chatRoomManagementRouter.js",
   ],
 };
 
