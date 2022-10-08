@@ -20,7 +20,7 @@ routes.get("/teams", teams.getTeams);
 
 /**
  * @swagger
- * /api/1/tasks-management/teams/{id}:
+ * /api/1/teams-management/teams/{id}:
  *   get:
  *     summary: Retrieve a single team
  *     description: Retrieve a single team by id
