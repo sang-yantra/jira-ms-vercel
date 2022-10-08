@@ -13,7 +13,7 @@ const memberId_Anup = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
  * @param {} Id 
  * @returns Member
  */
-export async function getMemberById(Id) {
+export async function getMemberByIdTemp(Id) {
 
 
     const x = "";
