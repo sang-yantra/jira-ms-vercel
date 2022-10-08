@@ -1,8 +1,8 @@
 import express from "express";
 import * as teams from "../controllers/teamsController.js";
+import multer from "multer";
 
 const routes = express.Router();
-
 
 /**
  * @swagger
@@ -19,33 +19,33 @@ const routes = express.Router();
 routes.get("/teams", teams.getTeams);
 
 /**
-* @swagger
-* /api/1/tasks-management/teams/{id}:
-*   get:
-*     summary: Retrieve a single team
-*     description: Retrieve a single team by id
-*     tags:
-*       - Teams
-*     parameters:
-*       - in: path
-*         name: id
-*         type: string
-*         required: true
-*         description: Numeric ID of the user to get
-*     responses:
-*       '200':
-*         description: Successful operation
-*         content:
-*           application/json:
-*             schema:
-*               $ref: "#/components/schemas/Team"
-*           application/xml:
-*             schema:
-*               $ref: "#/components/schemas/Team"
+ * @swagger
+ * /api/1/teams-management/teams/{id}:
+ *   get:
+ *     summary: Retrieve a single team
+ *     description: Retrieve a single team by id
+ *     tags:
+ *       - Teams
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the user to get
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Team"
+ *           application/xml:
+ *             schema:
+ *               $ref: "#/components/schemas/Team"
  */
- routes.get("/teams/:id", teams.getTeam);
+routes.get("/teams/:id", teams.getTeam);
 
- /**    
+/**
  * @swagger
  * /api/1/teams-management/teams:
  *   post:
@@ -88,27 +88,57 @@ routes.post("/teams", teams.createTeam);
  *     responses:
  *       201:
  *         description: task creatd.
-*/
-routes.put("/teams/:id", teams.updateTeam)
+ */
+routes.put("/teams/:id", teams.updateTeam);
 
 /**
-* @swagger
-* /api/1/teams-management/teams/{id}:
-*   delete:
-*     summary: Delete a single team by id.
-*     description: Delete a single team by id.
-*     tags:
-*       - Teams
-*     parameters:
-*       - in: path
-*         name: id
-*         type: integer
-*         required: true
-*         description: Numeric ID of the user to get
-*     responses:
-*       200:
-*         description: A single user.
-*/
+ * @swagger
+ * /api/1/teams-management/teams/{id}:
+ *   delete:
+ *     summary: Delete a single team by id.
+ *     description: Delete a single team by id.
+ *     tags:
+ *       - Teams
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: integer
+ *         required: true
+ *         description: Numeric ID of the user to get
+ *     responses:
+ *       200:
+ *         description: A single user.
+ */
 routes.delete("/teams/:id", teams.deleteTeam);
 
-export default routes
+/**
+ * @swagger
+ * /api/1/teams-management/teams/{id}/image:
+ *   post:
+ *     summary: Create a new team
+ *     description: Create a new team
+ *     tags:
+ *       - Teams
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: integer
+ *         required: true
+ *         description: Id of the team
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data: # Media type
+ *           schema:            # Request payload
+ *             type: object
+ *             properties:      # Request parts
+ *               file:  # Part 3 (an image)
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: task creatd.
+ */
+routes.post("/teams/:id/image", multer().single("file"), teams.saveImageOfTeam);
+
+export default routes;

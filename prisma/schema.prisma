@@ -27,6 +27,7 @@ model Teams {
   Id          Bytes                     @id @db.Binary(16)
   Name        String                    @db.VarChar(200)
   Description String?                   @db.VarChar(250)
+  Teams_Photo Bytes?
   Members     TeamsMembersAssociation[]
 }
 
@@ -97,6 +98,40 @@ model TaskInfo {
   @@index([Pbi_Id], map: "pbiinfo_id_idx")
 }
 
+model ChatRoom {
+  RoomId          Bytes      @id @db.Binary(16)
+  Title           String     @db.VarChar(200)
+  Description     String?    @db.VarChar(250)
+  Type            Room_Type?
+  RoomImage       Bytes?
+  CreatedDateTime DateTime?
+  CreatedBy       String     @db.VarChar(200)
+}
+
+model Chat {
+  Id              Bytes     @id @db.Binary(16)
+  RoomId          Bytes     @db.Binary(16)
+  MemberId        Bytes     @db.Binary(16)
+  MemberName      String    @db.VarChar(200)
+  Description     Bytes?
+  CreatedDateTime DateTime?
+  CreatedBy       String    @db.VarChar(200)
+  UpdatedDateTime DateTime?
+
+  @@index([MemberId], map: "members_id_idx")
+  @@index([RoomId], map: "chatroom_id_idx")
+}
+
+model ChatRoomMemberAssoc {
+  Id         Bytes  @id @db.Binary(16)
+  RoomId     Bytes  @db.Binary(16)
+  MemberId   Bytes  @db.Binary(16)
+  MemberName String @db.VarChar(200)
+
+  @@index([MemberId], map: "members_id_idx")
+  @@index([RoomId], map: "chatroom_id_idx")
+}
+
 model UserTest {
   id   Int     @id @default(autoincrement())
   name String? @db.VarChar(256)
@@ -135,4 +170,10 @@ enum TaskInfo_Priority {
   Low
   Medium
   High
+}
+
+enum Room_Type {
+  Task
+  Pbi
+  General
 }
