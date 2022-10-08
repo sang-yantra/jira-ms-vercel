@@ -14,7 +14,7 @@
     "swagger-autogen": "node swagger.js"
   },
   "dependencies": {
-    "@prisma/client": "^4.1.1",
+    "@prisma/client": "^4.3.1",
     "axios": "^0.27.2",
     "binary-uuid": "^2.0.3",
     "cors": "^2.8.5",
@@ -38,7 +38,7 @@
     "cross-env": "^6.0.3",
     "nodemon": "^2.0.0",
     "prettier": "^1.19.1",
-    "prisma": "^4.1.1",
+    "prisma": "^4.3.1",
     "swagger-autogen": "^2.21.5"
   },
   "keywords": [],
