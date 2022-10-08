@@ -20,6 +20,7 @@ const PBI_ID = 'f57da697-1bfa-11ed-a3b2-b622babdeb3e';
 const ASSIGNED_TO = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
 
 export const getMemberById = catchErrors(async (req, res) => {
-    const memberid = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
-    await new MemberServices().getMemberById(memberid)
+    const memberid = 'ad55b9e0-39f6-49aa-8660-f4c4a998fd9d'
+    const member= await new MemberServices().getMemberById(memberid)
+    res.json(member);
 })

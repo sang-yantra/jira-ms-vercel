@@ -13,7 +13,7 @@ const memberId_Anup = 'a2a64c91-1bf8-11ed-a3b2-b622babdeb3e'
  * @param {} Id 
  * @returns Member
  */
-export async function getMemberByIdTest(Id) {
+export async function getMemberById(Id) {
 
 
     const x = "";
@@ -41,7 +41,14 @@ export async function getMemberByIdTest(Id) {
     //     }
     // })
 
+    const memberById= await context.members.findFirstOrThrow({
+        where: {
+            Id: uuidStringToBuffer(Id)
+        }
+        
+    })
 
+    return memberById;
     /// Example of creating new member, new association with already existing team
     // const onlyMembers = await context.members.create({
     //     data: {
